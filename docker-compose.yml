@@ -1,0 +1,29 @@
+version: "3.9"
+   
+services:
+  postgres:
+    build: ./postgres
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_DB=grafana
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+  grafana:
+    container_name: grafana
+    image: grafana/grafana:latest
+    restart: unless-stopped
+    depends_on:
+      - postgres
+    ports:
+      - 3000:3000
+    volumes:
+      - ./grafana_data:/var/lib/grafana
+      - ./grafana/provisioning/:/etc/grafana/provisioning/
+    environment:
+      - GF_DATABASE_TYPE=postgres
+      - GF_DATABASE_HOST=postgres:5432
+      - GF_DATABASE_NAME=grafana
+      - GF_DATABASE_USER=postgres
+      - GF_DATABASE_PASSWORD=postgres
+      - GF_DATABASE_SSL_MODE=disable

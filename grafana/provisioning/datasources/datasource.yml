@@ -10,7 +10,7 @@ deleteDatasources:
 datasources:
 - name: cloudquery-postgres
   type: postgres
-  url: localhost:5432
+  url: postgres:5432
   database: cloudquery
   user: cloudquery
   secureJsonData:
